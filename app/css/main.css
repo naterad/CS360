@@ -1,3 +1,7 @@
 h3{
   color:red;
 }
+.navbar-brand{
+  background-color: red;
+  color: white !important; /*this is bad practice. I will delete this*/
+}

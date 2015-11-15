@@ -15,11 +15,12 @@ var App = React.createClass({
                    <span className="icon-bar"></span>
                    <span className="icon-bar"></span>
                 </button>
-                <a className="navbar-brand" href="/">Beginning</a>
+                <a className="navbar-brand" href="/">What should our brand be?</a>
               </div>
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul className="nav navbar-nav">
-                  <li><Link to="page">Page</Link></li>
+                  <li><Link to="page">Projects</Link></li>
+                  <li><Link to="second">Project Page</Link></li>
                 </ul>
               </div>
             </div>
@@ -48,8 +49,19 @@ var Page = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>Page</h1>
+        <h1>List of all the projects</h1>
         <p>Demo another page here</p>
+      </div>
+    );
+  }
+});
+
+var Second = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <h1>Single Project</h1>
+        <p>Demo second page here</p>
       </div>
     );
   }
@@ -60,7 +72,8 @@ var routes = (
       <Router>
         <Route name="app" path="/" component={App}>
           <Route name="page" path="/page" component={Page} />
-          <Route path="*" component={Home}/>
+          <Route name="second" path="/second" component={Second} />
+          <Route name="" path="*" component={Home}/>
         </Route>
       </Router>
 );
