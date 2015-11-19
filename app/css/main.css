@@ -1,7 +1,86 @@
+body{
+  font-family: 'Carme', sans-serif;
+  margin: 0;
+}
+.body_div{
+  padding-left: 30px;
+  padding-right: 30px;
+}
 h3{
   color:red;
 }
 .navbar-brand{
   background-color: red;
   color: white !important; /*this is bad practice. I will delete this*/
+}
+.hidden{
+  background-color: blue;
+  display: none;
+}
+.login{
+  text-align: center;
+  margin-top: 15%;
+}
+.header{
+  background-color: #E5E4E2;
+}
+.brand{
+  display: inline-block;
+  /*background-color: #1589FF; */
+  background-color: #F75D59;
+  color:white;
+  font-size: 22px;
+
+  width: 75px;
+  margin:auto;
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+
+
+}
+.navbar{
+  display: inline-block;
+  float: right;
+}
+.navbar_p{
+  padding-top: 30px;
+  display: inline-flex;
+  padding-right: 30px;
+}
+.navbar_p a{
+  text-decoration: none;
+  color:black;
+}
+td{
+  border:solid;
+}
+table{
+}
+
+
+
+
+
+
+
+
+.btn{
+  background-color: #F75D59;
+  width:20%;
+  color:white;
+}
+
+input{
+    font-size: 15px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 30%;
+    padding: 15px;
+
+    /*border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;*/
+
 }

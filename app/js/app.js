@@ -1,11 +1,14 @@
 var Router = ReactRouter.Router;
 var Link = ReactRouter.Link;
 var Route = ReactRouter.Route;
+var IndexRoute = ReactRouter.Route;
+
 
 var App = React.createClass({
   render: function() {
     return (
       <div>
+      <div className="hidden">
         <nav className="navbar navbar-default" role="navigation">
           <div className="container">
               <div className="navbar-header">
@@ -15,53 +18,132 @@ var App = React.createClass({
                    <span className="icon-bar"></span>
                    <span className="icon-bar"></span>
                 </button>
-                <a className="navbar-brand" href="/">What should our brand be?</a>
+                <a className="navbar-brand" href="/">Jack</a>
               </div>
               <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul className="nav navbar-nav">
-                  <li><Link to="page">Projects</Link></li>
-                  <li><Link to="second">Project Page</Link></li>
+                  <li><Link to="page">Page</Link></li>
                 </ul>
               </div>
             </div>
         </nav>
+      </div>
+
 
         <div className="container">
-          {this.props.children}
+          {this.props.children || <Login/>}
         </div>
       </div>
     );
   }
 });
 
-var Home = React.createClass({
+var Login = React.createClass({
+
+  login: function(event) {
+      // prevent default browser submit
+      //event.preventDefault();
+
+
+      //this.context.router.transitionTo('/page').bind(this);
+
+      // get data from form
+      var username = this.refs.username.getDOMNode().value;
+      var password = this.refs.password.getDOMNode().value;
+      // if (!username || !password) {
+      //     return;
+      // }
+      // login via API
+      // auth.login(username, password, function(loggedIn) {
+      //     // login callback
+      //     // if (!loggedIn)
+      //     //     return this.setState({
+      //     //         error: true
+      //     //     });
+      //     this.context.router.transitionTo('/page');
+      // }.bind(this));
+      this.context.router.transitionTo('page');
+  },
+
   render: function() {
     return (
-      <div>
-        <h1>Home</h1>
-        <p>Put your home page here</p>
+      <div className="login">
+
+        <form className="form" onSubmit={this.login}>
+        <input type="text" placeholder="Email" ref="username" autoFocus={true} />
+        <br/>
+        <input type="password" placeholder="Password" ref="password"/>
+        <br/>
+        <br/>
+        <input className="btn" type="submit" value="Login" />
+        </form>
+        <br/>
+        <br/>
+        <Link to="listpage">Project List</Link>
       </div>
     );
   }
 });
 
-var Page = React.createClass({
+var ListPage = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>List of all the projects</h1>
-        <p>Demo another page here</p>
+
+        <Header/>
+        <div className="body_div">
+          <h1>Page with all the projects</h1>
+
+          <Link to="login">back to login page</Link>
+        </div>
       </div>
     );
   }
 });
 
-var Second = React.createClass({
+var ProjectPage = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>Single Project</h1>
-        <p>Demo second page here</p>
+
+        <Header/>
+        <div className="body_div">
+          <h1>Project Page</h1>
+          <Link to="login">back to login page</Link>
+        </div>
+      </div>
+    );
+  }
+});
+
+var Profile = React.createClass({
+  render: function() {
+    return (
+      <div>
+
+        <Header/>
+        <div className="body_div">
+          <h1>Profile</h1>
+          <Link to="login">back to login page</Link>
+        </div>
+      </div>
+    );
+  }
+});
+
+
+var Header = React.createClass({
+  render: function() {
+    return (
+      <div className="header">
+        <div className="brand">Jack</div>
+        <div className="navbar">
+
+            <span className="navbar_p"><Link to="listpage">Project List</Link></span>
+            <span className="navbar_p"><Link to="projectpage">Project Page</Link></span>
+            <span className="navbar_p"><Link to="profile">Profile</Link></span>
+
+        </div>
       </div>
     );
   }
@@ -71,9 +153,10 @@ var Second = React.createClass({
 var routes = (
       <Router>
         <Route name="app" path="/" component={App}>
-          <Route name="page" path="/page" component={Page} />
-          <Route name="second" path="/second" component={Second} />
-          <Route name="" path="*" component={Home}/>
+        <Route name="listpage" path="/listpage" component={ListPage} />
+        <Route name="login" path="/login" component={Login} />
+        <Route name="projectpage" path="/projectpage" component={ProjectPage} />
+        <Route name="profile" path="/profile" component={Profile} />
         </Route>
       </Router>
 );
