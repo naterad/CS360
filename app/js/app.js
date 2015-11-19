@@ -64,7 +64,6 @@ var Login = React.createClass({
       // }.bind(this));
       this.context.router.transitionTo('page');
   },
-
   render: function() {
     return (
       <div className="login">
@@ -76,7 +75,8 @@ var Login = React.createClass({
         <br/>
         <br/>
         <input className="btn" type="submit" value="Login" />
-        </form>
+	</form>
+	<Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
         <br/>
         <br/>
         <Link to="listpage">Project List</Link>
@@ -157,7 +157,27 @@ var Profile = React.createClass({
     );
   }
 });
-
+var Signup=React.createClass({
+  render: function(){
+    return(
+      <div className="signup">
+	<form className="form">
+	<input type="text" placeholder="First name" ref="first"/>
+	<br />
+	<input type="text" placeholder="Last name" ref="last"/>
+	<br />
+	<input type="text" placeholder="Email" ref="email"/>
+	<br />
+	<input type="password" placeholder="Password" ref="password"/>
+	<br />
+	<input type="password" placeholder="Confirm Password" ref="confirm"/>
+	<br />
+	<input type="submit" className="btn" value="Register"/>
+	</form>
+      </div>
+    );
+  }
+});
 
 var Header = React.createClass({
   render: function() {
@@ -182,6 +202,7 @@ var routes = (
         <Route name="app" path="/" component={App}>
         <Route name="listpage" path="/listpage" component={ListPage} />
         <Route name="login" path="/login" component={Login} />
+	<Route name="signup" path="/signup" component={Signup} />
         <Route name="projectpage" path="/projectpage" component={ProjectPage} />
         <Route name="profile" path="/profile" component={Profile} />
         </Route>

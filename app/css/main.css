@@ -17,6 +17,10 @@ h3{
   background-color: blue;
   display: none;
 }
+.signup{
+  text-align:center;
+  margin-top:10%;
+}
 .login{
   text-align: center;
   margin-top: 15%;
@@ -84,7 +88,9 @@ table{
   margin-top: 5px;
 }
 
-
+a{
+text-decoration:none;
+}
 
 
 
@@ -95,7 +101,6 @@ table{
   width:20%;
   color:white;
 }
-
 input{
     font-size: 15px;
     box-sizing: border-box;
