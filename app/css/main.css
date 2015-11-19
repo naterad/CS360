@@ -57,7 +57,32 @@ td{
 }
 table{
 }
-
+.list_item{
+  border:solid #C0C0C0 1px;
+  padding:10px;
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+}
+.proj_body{
+  border:solid #C0C0C0 1px;
+  padding:10px;
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.comment{
+  border:solid #C0C0C0 1px;
+  /*padding-top: 5px;*/
+  padding-bottom: 25px;
+  padding-left:10px;
+  padding-right:10px;
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+}
 
 
 

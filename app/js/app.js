@@ -92,7 +92,13 @@ var ListPage = React.createClass({
 
         <Header/>
         <div className="body_div">
-          <h1>Page with all the projects</h1>
+          <h1>Project List</h1>
+          <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
+          <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
+          <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+          <div className="list_item">Project 4</div>
+          <div className="list_item">Project 5</div>
+          <div className="list_item">Project 6</div>
 
           <Link to="login">back to login page</Link>
         </div>
@@ -109,8 +115,29 @@ var ProjectPage = React.createClass({
         <Header/>
         <div className="body_div">
           <h1>Project Page</h1>
+          <div className="proj_body">
+          <p>Name: Bob Dylan</p>
+          <p>Address: 509 E. 2800 N. Cedar Hills, UT</p>
+          <p>Start Date: Oct 15, 2015</p>
+          <p>End Date: Dec 10, 2015</p>
+          </div>
+          <Comment/>
+          <Comment/>
+          <Comment/>
           <Link to="login">back to login page</Link>
         </div>
+      </div>
+    );
+  }
+});
+
+var Comment = React.createClass({
+  render: function() {
+    return (
+      <div className="comment">
+      <p>Name , Date </p>
+      <p>comment here</p>
+
       </div>
     );
   }
