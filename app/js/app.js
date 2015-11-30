@@ -202,6 +202,7 @@ var Signup=React.createClass({
 
   // handle regiser button submit
   register: function(event) {
+    debugger;
     // prevent default browser submit
     event.preventDefault();
     // get data from form
@@ -220,6 +221,7 @@ var Signup=React.createClass({
       return this.setState({
         error: true
       });
+      console.log('registered');
       this.context.router.replaceWith('/list');
     }.bind(this));
   },
@@ -237,7 +239,7 @@ var Signup=React.createClass({
       <br />
       <input type="password" placeholder="Confirm Password" ref="confirm"/>
       <br />
-      <input type="submit" className="btn" value="Register"/>
+      <input type="submit" onClick={this.register} className="btn" value="Register"/>
       </form>
       </div>
     );
