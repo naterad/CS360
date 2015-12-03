@@ -237,6 +237,9 @@ var Signup=React.createClass({
       <input type="password" placeholder="Confirm Password" ref="confirm"/>
       <br />
       <input type="submit" onClick={this.register} className="btn" value="Register"/>
+      {this.state.error ? (
+             <div className="alert">Invalid email or passwords do not match.</div>
+           ) : null }
       </form>
       </div>
     );
@@ -355,7 +358,7 @@ var auth = {
 var routes = (
   <Router>
   <Route name="app" path="/" component={App}>
-  <Route name="listpage" path="/listpage" component={ListPage} />
+  <Route name="listpage" path="/list" component={ListPage} />
   <Route name="login" path="/login" component={Login} />
   <Route name="signup" path="/signup" component={Signup} />
   <Route name="projectpage" path="/projectpage" component={ProjectPage} />
