@@ -19,6 +19,12 @@ var userSchema = new Schema({
     // index: true, unique: true
     password_hash: String,
 });
+userSchema.methods.setFirst=function(first){
+  this.first_name=first;
+};
+userSchema.methods.setLast=function(last){
+  this.last_name=last;
+};
 // hash the password
 userSchema.methods.set_password = function(password) {
     this.password_hash = bcrypt.hashSync(password, SALT);

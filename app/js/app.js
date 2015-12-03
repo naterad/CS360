@@ -2,7 +2,7 @@ var Router = ReactRouter.Router;
 var Link = ReactRouter.Link;
 var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.Route;
-
+var History = ReactRouter.History;
 
 var App = React.createClass({
   // context so the componevnt can access the router
@@ -187,11 +187,7 @@ var Profile = React.createClass({
   }
 });
 var Signup=React.createClass({
-  // context so the component can access the router
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
+  mixins: [ History ],
   // initial state
   getInitialState: function() {
     return {
@@ -206,11 +202,11 @@ var Signup=React.createClass({
     // prevent default browser submit
     event.preventDefault();
     // get data from form
-    var first = this.refs.first.getDOMNode().value;
-    var last = this.refs.last.getDOMNode().value;
-    var email = this.refs.email.getDOMNode().value;
-    var password = this.refs.password.getDOMNode().value;
-    var confirm = this.refs.confirm.getDOMNode().value;
+    var first = this.refs.first.value;
+    var last = this.refs.last.value;
+    var email = this.refs.email.value;
+    var password = this.refs.password.value;
+    var confirm = this.refs.confirm.value;
     if (!first || !last || !password||!email||!confirm||(confirm!=password)) {
       return;
     }
@@ -222,7 +218,8 @@ var Signup=React.createClass({
         error: true
       });
       console.log('registered');
-      this.context.router.transitionTo('/list');
+      //this.context.router.transitionTo('/list');
+      this.history.pushState(null, '/list');
     }.bind(this));
   },
   render: function(){

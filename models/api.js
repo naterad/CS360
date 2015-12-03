@@ -19,8 +19,10 @@ app.post('/api/users/register', function (req, res) {
   User.findOrCreate({email: req.body.email}, function(err, user, created) {
     if (created) {
       // if this email is not taken, then create a user record
-      user.first = req.body.first;
-      user.last = req.body.last;
+      //user.first = req.body.first;
+      //user.last = req.body.last;
+      user.setFirst(req.body.first);
+      user.setLast(req.body.last);
       user.set_password(req.body.password);
       user.save(function(err) {
         if (err) {
