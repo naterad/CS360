@@ -13,8 +13,11 @@
     "mongoose": "^4.2.8",
     "mongoose-findorcreate": "~0.1.2"
   },
-  "repository":{
-    "type":"git",
-    "url":"https://github.com/drudge/mongoose-findorcreate.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drudge/mongoose-findorcreate.git"
+  },
+  "devDependencies": {
+    "webpack": "^1.12.9"
   }
 }
