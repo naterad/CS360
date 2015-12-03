@@ -202,7 +202,7 @@ var Signup=React.createClass({
 
   // handle regiser button submit
   register: function(event) {
-    debugger;
+    //debugger;
     // prevent default browser submit
     event.preventDefault();
     // get data from form
@@ -222,7 +222,7 @@ var Signup=React.createClass({
         error: true
       });
       console.log('registered');
-      this.context.router.replaceWith('/list');
+      this.context.router.transitionTo('/list');
     }.bind(this));
   },
   render: function(){
