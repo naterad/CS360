@@ -97,6 +97,7 @@ var Login = React.createClass({
     return (
       <div className="login">
 
+<<<<<<< Updated upstream
       <form className="form" onSubmit={this.listpage}>
       <input type="text" placeholder="Email" ref="username" autoFocus={true} />
       <br/>
@@ -109,6 +110,20 @@ var Login = React.createClass({
       <br/>
       <br/>
       <Link to="listpage">Project List</Link>
+=======
+        <form className="form" onSubmit={this.login}>
+        <input type="text" placeholder="Email" ref="username" autoFocus={true} />
+        <br/>
+        <input type="password" placeholder="Password" ref="password"/>
+        <br/>
+        <br/>
+        <input className="btn" type="submit" value="Login" />
+	       </form>
+	        <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
+        <br/>
+        <br/>
+        <Link to="listpage">Project List</Link>
+>>>>>>> Stashed changes
       </div>
     );
   }
@@ -118,16 +133,15 @@ var ListPage = React.createClass({
   render: function() {
     return (
       <div>
-
-      <Header/>
-      <div className="body_div">
-      <h1>Project List</h1>
-      <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
-      <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
-      <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
-      <div className="list_item">Project 4</div>
-      <div className="list_item">Project 5</div>
-      <div className="list_item">Project 6</div>
+        <Header/>
+        <div className="body_div">
+          <h1>Project List</h1>
+          <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
+          <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
+          <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+          <div className="list_item">Project 4  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+          <div className="list_item">Project 5  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+          <div className="list_item">Project 6  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
 
       <Link to="login">back to login page</Link>
       </div>
@@ -250,8 +264,13 @@ var Header = React.createClass({
   render: function() {
     return (
       <div className="header">
+<<<<<<< Updated upstream
       <div className="brand">Jack</div>
       <div className="navbar">
+=======
+        <div className="brand">Fake</div>
+        <div className="navbar">
+>>>>>>> Stashed changes
 
       <span className="navbar_p"><Link to="listpage">Project List</Link></span>
       <span className="navbar_p"><Link to="projectpage">Project Page</Link></span>

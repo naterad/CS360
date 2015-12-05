@@ -1,0 +1,29 @@
+[project list]
+carrier allstate, state farm,
+job type smoke, fire, suicide, mold
+name
+project number
+Address
+
+
+[project page]
+estimated end Date
+calendar (job schedule)
+documents
+notes
+claim number
+5 things
+agent infor
+  contact, phone, address, email
+adjuster info
+  same as agent
+
+
+links
+job sched
+document
+notes - send notes to everyone
+messages
+
+
+email notifications
