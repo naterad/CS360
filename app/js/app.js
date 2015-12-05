@@ -67,43 +67,47 @@ var App = React.createClass({
 });
 
 var Login = React.createClass({
+  mixins: [ History ],
+  getInitialState: function() {
+      return {
+        // there was an error on logging in
+        error: false
+      };
 
+    },
   login: function(event) {
-    // prevent default browser submit
-    //event.preventDefault();
-
-
-    //this.context.router.transitionTo('/page').bind(this);
 
     // get data from form
-    var username = this.refs.username.getDOMNode().value;
-    var password = this.refs.password.getDOMNode().value;
-    // if (!username || !password) {
-    //     return;
-    // }
-    // login via API
-    // auth.login(username, password, function(loggedIn) {
-    //     // login callback
-    //     // if (!loggedIn)
-    //     //     return this.setState({
-    //     //         error: true
-    //     //     });
-    //     this.context.router.transitionTo('/page');
-    // }.bind(this));
-
-    //this.context.router.transitionTo('page');
+    var email = this.refs.email.value;
+    var password = this.refs.password.value;
+    if (!email || !password) {
+          return;
+        }
+        // login via API
+    auth.login(email, password, function(loggedIn) {
+      // login callback
+      if (!loggedIn)
+        return this.setState({
+          error: true
+        });
+        console.log('registered');
+      this.history.pushState(null, '/list');
+    }.bind(this));
   },
   render: function() {
     return (
       <div className="login">
 
       <form className="form" onSubmit={this.listpage}>
-      <input type="text" placeholder="Email" ref="username" autoFocus={true} />
+      <input type="text" placeholder="Email" ref="email" autoFocus={true} />
       <br/>
       <input type="password" placeholder="Password" ref="password"/>
       <br/>
       <br/>
-      <input className="btn" type="submit" value="Login" />
+      <input className="btn" onClick={this.login} type="submit" value="Login" />
+      {this.state.error ? (
+             <div className="alert">Invalid email or password.</div>
+           ) : null}
       </form>
       <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
       <br/>
