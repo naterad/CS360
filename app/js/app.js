@@ -6,34 +6,34 @@ var History = ReactRouter.History;
 
 var App = React.createClass({
   // context so the componevnt can access the router
-    contextTypes: {
-        router: React.PropTypes.func
-    },
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
-    // initial state
-    getInitialState: function() {
-        return {
-	        // the user is logged in
-            loggedIn: auth.loggedIn()
-        };
-    },
+  // initial state
+  getInitialState: function() {
+    return {
+      // the user is logged in
+      loggedIn: auth.loggedIn()
+    };
+  },
 
-    // callback when user is logged in
-    setStateOnAuth: function(loggedIn) {
-        this.state.loggedIn = loggedIn;
-    },
+  // callback when user is logged in
+  setStateOnAuth: function(loggedIn) {
+    this.state.loggedIn = loggedIn;
+  },
 
-    // when the component loads, setup the callback
-    componentWillMount: function() {
-        auth.onChange = this.setStateOnAuth;
-    },
+  // when the component loads, setup the callback
+  componentWillMount: function() {
+    auth.onChange = this.setStateOnAuth;
+  },
 
-    // logout the user and redirect to home page
-    logout: function(event) {
-        auth.logout();
-        this.context.router.replaceWith('/');
-    },
-    render: function() {
+  // logout the user and redirect to home page
+  logout: function(event) {
+    auth.logout();
+    this.context.router.replaceWith('/');
+  },
+  render: function() {
     return (
       <div>
       <div className="hidden">
@@ -69,45 +69,45 @@ var App = React.createClass({
 var Login = React.createClass({
   mixins: [ History ],
   getInitialState: function() {
-      return {
-        // there was an error on logging in
-        error: false
-      };
+    return {
+      // there was an error on logging in
+      error: false
+    };
 
-    },
+  },
   login: function(event) {
 
     // get data from form
     var email = this.refs.email.value;
     var password = this.refs.password.value;
     if (!email || !password) {
-          return;
-        }
-        // login via API
+      return;
+    }
+    // login via API
     auth.login(email, password, function(loggedIn) {
       // login callback
       if (!loggedIn)
-        return this.setState({
-          error: true
-        });
-        console.log('registered');
-      this.history.pushState(null, '/list');
+      return this.setState({
+        error: true
+      });
+      console.log('registered');
+      this.history.pushState(null, '/listpage');
     }.bind(this));
   },
   render: function() {
     return (
       <div className="login">
 
-      <form className="form" onSubmit={this.listpage}>
+      <form className="form" onSubmit={this.login}>
       <input type="text" placeholder="Email" ref="email" autoFocus={true} />
       <br/>
       <input type="password" placeholder="Password" ref="password"/>
       <br/>
       <br/>
-      <input className="btn" onClick={this.login} type="submit" value="Login" />
+      <input className="btn" type="submit" value="Login" />
       {this.state.error ? (
-             <div className="alert">Invalid email or password.</div>
-           ) : null}
+        <div className="alert">Invalid email or password.</div>
+      ) : null}
       </form>
       <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
       <br/>
@@ -122,24 +122,24 @@ var ListPage = React.createClass({
   render: function() {
     return (
       <div>
-        <Header/>
-        <div className="body_div">
-          <h1>Project List</h1>
-          <Link to="addproject">add project</Link>
+      <Header/>
+      <div className="body_div">
+      <h1>Project List</h1>
+      <Link to="addproject">add project</Link>
 
 
-          // name
-          // project number
-          // Address
-          // carrier allstate, state farm,
-          // job type smoke, fire, suicide, mold
+      // name
+      // project number
+      // Address
+      // carrier allstate, state farm,
+      // job type smoke, fire, suicide, mold
 
-          <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
-          <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
-          <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
-          <div className="list_item">Project 4  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
-          <div className="list_item">Project 5  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
-          <div className="list_item">Project 6  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+      <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
+      <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
+      <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+      <div className="list_item">Project 4  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+      <div className="list_item">Project 5  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+      <div className="list_item">Project 6  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
 
       <Link to="login">back to login page</Link>
       </div>
@@ -249,32 +249,32 @@ var AddProject = React.createClass({
       <h1>New Project</h1>
 
       <div className="newproject">
-        <form className="form">
-        <div>Project Info</div>
-        <input type="text" placeholder="Home owner name" ref="owner_name"/>
-        <input type="text" placeholder="Project number" ref="project_name"/>
-        <input type="text" placeholder="Address" ref="address"/>
-        <input type="text" placeholder="Carrier" ref="carrier"/>
-        <input type="text" placeholder="Job type" ref="job_type"/>
-        <input type="text" placeholder="start date" ref="start_date"/>
-        <input type="text" placeholder="estimated end date" ref="end_date"/>
-        <input type="text" placeholder="claim number" ref="claim"/>
-        <div>Agent Info</div>
-        <input type="text" placeholder="Agent name" ref="first"/>
-        <input type="text" placeholder="Phone" ref="first"/>
-        <input type="text" placeholder="Address" ref="first"/>
-        <input type="text" placeholder="Email" ref="first"/>
-        <div>Adjuster Info</div>
-        <input type="text" placeholder="Adjuster name" ref="first"/>
-        <input type="text" placeholder="Phone" ref="first"/>
-        <input type="text" placeholder="Address" ref="first"/>
-        <input type="text" placeholder="Email" ref="first"/>
-        <br />
-        <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
-        {this.state.error ? (
-               <div className="alert">Invalid input.</div>
-             ) : null }
-        </form>
+      <form className="form">
+      <div>Project Info</div>
+      <input type="text" placeholder="Home owner name" ref="owner_name"/>
+      <input type="text" placeholder="Project number" ref="project_name"/>
+      <input type="text" placeholder="Address" ref="address"/>
+      <input type="text" placeholder="Carrier" ref="carrier"/>
+      <input type="text" placeholder="Job type" ref="job_type"/>
+      <input type="text" placeholder="start date" ref="start_date"/>
+      <input type="text" placeholder="estimated end date" ref="end_date"/>
+      <input type="text" placeholder="claim number" ref="claim"/>
+      <div>Agent Info</div>
+      <input type="text" placeholder="Agent name" ref="first"/>
+      <input type="text" placeholder="Phone" ref="first"/>
+      <input type="text" placeholder="Address" ref="first"/>
+      <input type="text" placeholder="Email" ref="first"/>
+      <div>Adjuster Info</div>
+      <input type="text" placeholder="Adjuster name" ref="first"/>
+      <input type="text" placeholder="Phone" ref="first"/>
+      <input type="text" placeholder="Address" ref="first"/>
+      <input type="text" placeholder="Email" ref="first"/>
+      <br />
+      <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
+      {this.state.error ? (
+        <div className="alert">Invalid input.</div>
+      ) : null }
+      </form>
       </div>
 
       <Link to="listpage">back to project list</Link>
@@ -316,12 +316,12 @@ var Signup=React.createClass({
       });
       console.log('registered');
       //this.context.router.transitionTo('/list');
-      this.history.pushState(null, '/list');
+      this.history.pushState(null, '/listpage');
     }.bind(this));
   },
   render: function(){
     return(
-      <div className="signup">
+      <div className="signup" onSubmit={this.register}>
       <form className="form">
       <input type="text" placeholder="First name" ref="first"/>
       <br />
@@ -333,10 +333,10 @@ var Signup=React.createClass({
       <br />
       <input type="password" placeholder="Confirm Password" ref="confirm"/>
       <br />
-      <input type="submit" onClick={this.register} className="btn" value="Register"/>
+      <input type="submit" className="btn" value="Register"/>
       {this.state.error ? (
-             <div className="alert">Invalid email or passwords do not match.</div>
-           ) : null }
+        <div className="alert">Invalid email or passwords do not match.</div>
+      ) : null }
       </form>
       </div>
     );
@@ -362,147 +362,147 @@ var Header = React.createClass({
 });
 var project = {
   addNew: function(project_name, cb) {
-      console.log("in the addNew");
-      //console.log(cb);
-      // submit request to server, call the callback when complete
-      var url = '/api/projects';
-      $.ajax({
-          url: url,
-          dataType: 'json',
-          type: 'POST',
-          data: {
-              // owner_name: owner_name,
-               title: project_name
-              // address: address,
-              // carrier: carrier,
-              // start_date: start_date,
-              // end_date: end_date,
-              // claim: claim
-          },
-          // on success, store a login token
-          success: function(res) {
-            console.log("success");
-              //localStorage.owner_name = res.owner_name;
-              //localStorage.email = res.email;
-              //localStorage.email = res.email;
+    console.log("in the addNew");
+    //console.log(cb);
+    // submit request to server, call the callback when complete
+    var url = '/api/projects';
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'POST',
+      data: {
+        // owner_name: owner_name,
+        title: project_name
+        // address: address,
+        // carrier: carrier,
+        // start_date: start_date,
+        // end_date: end_date,
+        // claim: claim
+      },
+      // on success, store a login token
+      success: function(res) {
+        console.log("success");
+        //localStorage.owner_name = res.owner_name;
+        //localStorage.email = res.email;
+        //localStorage.email = res.email;
 
 
-              if (cb)
-                  cb(true);
-              this.onChange(true);
-          }.bind(this),
-          error: function(xhr, status, err) {
-            console.log("error with adding a new project");
-            console.log(err);
-              // if there is an error, remove any login token
-                // delete localStorage.token;
-                // if (cb)
-                //     cb(false);
-                // this.onChange(false);
-          }.bind(this)
-      });
-  },
+        if (cb)
+        cb(true);
+        this.onChange(true);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log("error with adding a new project");
+        console.log(err);
+        // if there is an error, remove any login token
+        // delete localStorage.token;
+        // if (cb)
+        //     cb(false);
+        // this.onChange(false);
+      }.bind(this)
+    });
+  }
 
 };
 
 // authentication object
 var auth = {
-    register: function(first,last, email, password, cb) {
-        // submit request to server, call the callback when complete
-        var url = "/api/users/register";
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'POST',
-            data: {
-                first: first,
-                last: last,
-                email: email,
-                password: password
-            },
-            // on success, store a login token
-            success: function(res) {
-                localStorage.token = res.token;
-                localStorage.email = res.email;
-                if (cb)
-                    cb(true);
-                this.onChange(true);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                // if there is an error, remove any login token
-                delete localStorage.token;
-                if (cb)
-                    cb(false);
-                this.onChange(false);
-            }.bind(this)
-        });
-    },
-    // login the user
-    login: function(email, password, cb) {
-        // submit login request to server, call callback when complete
-        cb = arguments[arguments.length - 1];
-        // check if token in local storage
-        if (localStorage.token) {
-            if (cb)
-                cb(true);
-            this.onChange(true);
-            return;
-        }
-
-        // submit request to server
-        var url = "/api/users/login";
-        $.ajax({
-            url: url,
-            dataType: 'json',
-            type: 'POST',
-            data: {
-                email: email,
-                password: password
-            },
-            success: function(res) {
-                // on success, store a login token
-                localStorage.token = res.token;
-                localStorage.email = res.email;
-                if (cb)
-                    cb(true);
-                this.onChange(true);
-            }.bind(this),
-            error: function(xhr, status, err) {
-                // if there is an error, remove any login token
-                delete localStorage.token;
-                if (cb)
-                    cb(false);
-                this.onChange(false);
-            }.bind(this)
-        });
-    },
-    // get the token from local storage
-    getToken: function() {
-        return localStorage.token;
-    },
-    // get the email from local storage
-    getEmail: function() {
-        return localStorage.email;
-    },
-    // logout the user, call the callback when complete
-    logout: function(cb) {
+  register: function(first,last, email, password, cb) {
+    // submit request to server, call the callback when complete
+    var url = "/api/users/register";
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'POST',
+      data: {
+        first: first,
+        last: last,
+        email: email,
+        password: password
+      },
+      // on success, store a login token
+      success: function(res) {
+        localStorage.token = res.token;
+        localStorage.email = res.email;
+        if (cb)
+        cb(true);
+        this.onChange(true);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // if there is an error, remove any login token
         delete localStorage.token;
-        if (cb) cb();
+        if (cb)
+        cb(false);
         this.onChange(false);
-    },
-    // check if user is logged in
-    loggedIn: function() {
-        console.log(!!localStorage.token);
-        return !!localStorage.token;
-    },
-    // default onChange function
-    onChange: function() {},
+      }.bind(this)
+    });
+  },
+  // login the user
+  login: function(email, password, cb) {
+    // submit login request to server, call callback when complete
+    cb = arguments[arguments.length - 1];
+    // check if token in local storage
+    if (localStorage.token) {
+      if (cb)
+      cb(true);
+      this.onChange(true);
+      return;
+    }
+
+    // submit request to server
+    var url = "/api/users/login";
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'POST',
+      data: {
+        email: email,
+        password: password
+      },
+      success: function(res) {
+        // on success, store a login token
+        localStorage.token = res.token;
+        localStorage.email = res.email;
+        if (cb)
+        cb(true);
+        this.onChange(true);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // if there is an error, remove any login token
+        delete localStorage.token;
+        if (cb)
+        cb(false);
+        this.onChange(false);
+      }.bind(this)
+    });
+  },
+  // get the token from local storage
+  getToken: function() {
+    return localStorage.token;
+  },
+  // get the email from local storage
+  getEmail: function() {
+    return localStorage.email;
+  },
+  // logout the user, call the callback when complete
+  logout: function(cb) {
+    delete localStorage.token;
+    if (cb) cb();
+    this.onChange(false);
+  },
+  // check if user is logged in
+  loggedIn: function() {
+    console.log(!!localStorage.token);
+    return !!localStorage.token;
+  },
+  // default onChange function
+  onChange: function() {},
 };
 // Run the routes
 var routes = (
   <Router>
   <Route name="app" path="/" component={App}>
-  <Route name="listpage" path="/list" component={ListPage} />
+  <Route name="listpage" path="/listpage" component={ListPage} />
   <Route name="login" path="/login" component={Login} />
   <Route name="addproject" path="/addproject" component={AddProject} />
   <Route name="signup" path="/signup" component={Signup} />
