@@ -15,6 +15,10 @@ var projectSchema = new Schema({
     completed: Boolean,
 });
 
+projectSchema.methods.setTitle=function(title){
+  this.title=title;
+};
+
 // ensure schemas use virtual IDs
 projectSchema.set('toJSON', {
     virtuals: true

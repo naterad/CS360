@@ -206,7 +206,7 @@ var AddProject = React.createClass({
   },
 
   // handle regiser button submit
-  register: function(event) {
+  addnewproject: function(event) {
     //debugger;
     // prevent default browser submit
     event.preventDefault();
@@ -223,7 +223,8 @@ var AddProject = React.createClass({
     }
 
     // register via the API
-    project.addNew(owner_name,project_name, address, carrier, start_date, end_date, claim, function(loggedIn) {
+    //project.addNew(owner_name,project_name, address, carrier, start_date, end_date, claim, function(loggedIn) {
+    project.addNew(owner_name, function(loggedIn) {
       // register callback
       if (!loggedIn)
       return this.setState({
@@ -265,7 +266,7 @@ var AddProject = React.createClass({
         <input type="text" placeholder="Address" ref="first"/>
         <input type="text" placeholder="Email" ref="first"/>
         <br />
-        <input className="btn addsubmit" onClick={this.register} type="submit" value="Submit"/>
+        <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
         {this.state.error ? (
                <div className="alert">Invalid input.</div>
              ) : null }
@@ -356,7 +357,7 @@ var Header = React.createClass({
   }
 });
 var project = {
-  addNew: function(owner_name,project_name, address, carrier, start_date, end_date, claim, cb) {
+  addNew: function(project_name, cb) {
       console.log("in the addNew");
       //console.log(cb);
       // submit request to server, call the callback when complete
@@ -367,7 +368,7 @@ var project = {
           type: 'POST',
           data: {
               // owner_name: owner_name,
-              // project_name: project_name,
+               title: project_name
               // address: address,
               // carrier: carrier,
               // start_date: start_date,
@@ -388,6 +389,7 @@ var project = {
           }.bind(this),
           error: function(xhr, status, err) {
             console.log("error with adding a new project");
+            console.log(err);
               // if there is an error, remove any login token
                 // delete localStorage.token;
                 // if (cb)
@@ -486,6 +488,7 @@ var auth = {
     },
     // check if user is logged in
     loggedIn: function() {
+        console.log(!!localStorage.token);
         return !!localStorage.token;
     },
     // default onChange function
