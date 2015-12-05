@@ -370,6 +370,7 @@ var project = {
       url: url,
       dataType: 'json',
       type: 'POST',
+      headers: {'Authorization': localStorage.token},
       data: {
         // owner_name: owner_name,
         title: project_name

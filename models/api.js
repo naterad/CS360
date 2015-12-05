@@ -89,7 +89,7 @@ app.post('/api/projects', function (req,res) {
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
       console.log("inside the user if statement");
-      user.setTitle("req.body.first");
+      //user.setTitle("req.body.first");
       //user.setFirst(req.body.first);
       //user.setLast(req.body.last);
       //user.set_password(req.body.password);
