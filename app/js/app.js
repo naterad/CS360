@@ -97,7 +97,6 @@ var Login = React.createClass({
     return (
       <div className="login">
 
-<<<<<<< Updated upstream
       <form className="form" onSubmit={this.listpage}>
       <input type="text" placeholder="Email" ref="username" autoFocus={true} />
       <br/>
@@ -110,20 +109,6 @@ var Login = React.createClass({
       <br/>
       <br/>
       <Link to="listpage">Project List</Link>
-=======
-        <form className="form" onSubmit={this.login}>
-        <input type="text" placeholder="Email" ref="username" autoFocus={true} />
-        <br/>
-        <input type="password" placeholder="Password" ref="password"/>
-        <br/>
-        <br/>
-        <input className="btn" type="submit" value="Login" />
-	       </form>
-	        <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
-        <br/>
-        <br/>
-        <Link to="listpage">Project List</Link>
->>>>>>> Stashed changes
       </div>
     );
   }
@@ -136,6 +121,15 @@ var ListPage = React.createClass({
         <Header/>
         <div className="body_div">
           <h1>Project List</h1>
+          <Link to="addproject">add project</Link>
+
+
+          // name
+          // project number
+          // Address
+          // carrier allstate, state farm,
+          // job type smoke, fire, suicide, mold
+
           <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
           <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
           <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
@@ -195,6 +189,90 @@ var Profile = React.createClass({
       <div className="body_div">
       <h1>Profile</h1>
       <Link to="login">back to login page</Link>
+      </div>
+      </div>
+    );
+  }
+});
+
+var AddProject = React.createClass({
+  mixins: [ History ],
+  // initial state
+  getInitialState: function() {
+    return {
+      // there was an error registering
+      error: false
+    };
+  },
+
+  // handle regiser button submit
+  register: function(event) {
+    //debugger;
+    // prevent default browser submit
+    event.preventDefault();
+    // get data from form
+    var owner_name = this.refs.owner_name.value;
+    var project_name = this.refs.project_name.value;
+    var address = this.refs.address.value;
+    var carrier = this.refs.carrier.value;
+    var start_date = this.refs.start_date.value;
+    var end_date = this.refs.end_date.value;
+    var claim = this.refs.claim.value;
+    if (!owner_name || !project_name || !address ||!carrier ||!start_date || !end_date|| !claim ) {
+      return;
+    }
+
+    // register via the API
+    project.addNew(owner_name,project_name, address, carrier, start_date, end_date, claim, function(loggedIn) {
+      // register callback
+      if (!loggedIn)
+      return this.setState({
+        error: true
+      });
+      console.log('project added');
+      //this.context.router.transitionTo('/list');
+      this.history.pushState(null, '/projectpage');
+    }.bind(this));
+  },
+
+  render: function() {
+    return (
+      <div>
+
+      <Header/>
+      <div className="body_div">
+      <h1>New Project</h1>
+
+      <div className="newproject">
+        <form className="form">
+        <div>Project Info</div>
+        <input type="text" placeholder="Home owner name" ref="owner_name"/>
+        <input type="text" placeholder="Project number" ref="project_name"/>
+        <input type="text" placeholder="Address" ref="address"/>
+        <input type="text" placeholder="Carrier" ref="carrier"/>
+        <input type="text" placeholder="Job type" ref="job_type"/>
+        <input type="text" placeholder="start date" ref="start_date"/>
+        <input type="text" placeholder="estimated end date" ref="end_date"/>
+        <input type="text" placeholder="claim number" ref="claim"/>
+        <div>Agent Info</div>
+        <input type="text" placeholder="Agent name" ref="first"/>
+        <input type="text" placeholder="Phone" ref="first"/>
+        <input type="text" placeholder="Address" ref="first"/>
+        <input type="text" placeholder="Email" ref="first"/>
+        <div>Adjuster Info</div>
+        <input type="text" placeholder="Adjuster name" ref="first"/>
+        <input type="text" placeholder="Phone" ref="first"/>
+        <input type="text" placeholder="Address" ref="first"/>
+        <input type="text" placeholder="Email" ref="first"/>
+        <br />
+        <input className="btn addsubmit" onClick={this.register} type="submit" value="Submit"/>
+        {this.state.error ? (
+               <div className="alert">Invalid input.</div>
+             ) : null }
+        </form>
+      </div>
+
+      <Link to="listpage">back to project list</Link>
       </div>
       </div>
     );
@@ -264,13 +342,9 @@ var Header = React.createClass({
   render: function() {
     return (
       <div className="header">
-<<<<<<< Updated upstream
       <div className="brand">Jack</div>
       <div className="navbar">
-=======
-        <div className="brand">Fake</div>
-        <div className="navbar">
->>>>>>> Stashed changes
+
 
       <span className="navbar_p"><Link to="listpage">Project List</Link></span>
       <span className="navbar_p"><Link to="projectpage">Project Page</Link></span>
@@ -281,6 +355,50 @@ var Header = React.createClass({
     );
   }
 });
+var project = {
+  addNew: function(owner_name,project_name, address, carrier, start_date, end_date, claim, cb) {
+      console.log("in the addNew");
+      //console.log(cb);
+      // submit request to server, call the callback when complete
+      var url = '/api/projects';
+      $.ajax({
+          url: url,
+          dataType: 'json',
+          type: 'POST',
+          data: {
+              // owner_name: owner_name,
+              // project_name: project_name,
+              // address: address,
+              // carrier: carrier,
+              // start_date: start_date,
+              // end_date: end_date,
+              // claim: claim
+          },
+          // on success, store a login token
+          success: function(res) {
+            console.log("success");
+              //localStorage.owner_name = res.owner_name;
+              //localStorage.email = res.email;
+              //localStorage.email = res.email;
+
+
+              if (cb)
+                  cb(true);
+              this.onChange(true);
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.log("error with adding a new project");
+              // if there is an error, remove any login token
+                // delete localStorage.token;
+                // if (cb)
+                //     cb(false);
+                // this.onChange(false);
+          }.bind(this)
+      });
+  },
+
+};
+
 // authentication object
 var auth = {
     register: function(first,last, email, password, cb) {
@@ -379,6 +497,7 @@ var routes = (
   <Route name="app" path="/" component={App}>
   <Route name="listpage" path="/list" component={ListPage} />
   <Route name="login" path="/login" component={Login} />
+  <Route name="addproject" path="/addproject" component={AddProject} />
   <Route name="signup" path="/signup" component={Signup} />
   <Route name="projectpage" path="/projectpage" component={ProjectPage} />
   <Route name="profile" path="/profile" component={Profile} />

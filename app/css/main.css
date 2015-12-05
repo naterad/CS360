@@ -21,6 +21,17 @@ h3{
   text-align:center;
   margin-top:10%;
 }
+.newproject{
+  margin-left: 10%;
+}
+.newproject div{
+  margin-top: 2%;
+  margin-left: -10%;
+  text-align: center;
+}
+.addsubmit{
+  margin-left: 35% !important;
+}
 .login{
   text-align: center;
   margin-top: 15%;

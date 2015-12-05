@@ -7,16 +7,22 @@ Address
 
 
 [project page]
-estimated end Date
-calendar (job schedule)
-documents
-notes
-claim number
-5 things
-agent infor
-  contact, phone, address, email
-adjuster info
-  same as agent
+// THINGS TO HAVE IN A PROJECT
+// homeowner name
+// project number
+// Address
+// carrier allstate, state farm,
+// job type smoke, fire, suicide, mold
+
+// estimated end Date
+// claim number
+// agent infor
+//   contact, phone, address, email
+// adjuster info
+//   contact, phone, address, email
+// calendar (job schedule) //LEAVE OUT FOR NOW
+// documents //LEAVE OUT FOR NOW
+// notes //LEAVE OUT FOR NOW
 
 
 links

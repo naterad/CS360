@@ -85,10 +85,17 @@ app.get('/api/projects', function (req,res) {
 app.post('/api/projects', function (req,res) {
   // validate the supplied token
   // get indexes
+  console.log("inside the add function");
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
+      console.log("inside the user if statement");
+      //user.setFirst(req.body.first);
+      //user.setLast(req.body.last);
+      //user.set_password(req.body.password);
+
       // if the token is valid, create the project for the user
-      Project.create({title:req.body.project.title,completed:false,user:user.id}, function(err,project) {
+      //Project.create({title:req.body.project.title,completed:false,user:user.id}, function(err,project) {
+      Project.create({title:"fake title",completed:false,user:user.id}, function(err,project) {
         if (err) {
           res.sendStatus(403);
           return;
