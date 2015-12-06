@@ -26,7 +26,7 @@ Address
 
 //Project.create({title:req.body.project.title,completed:false,user:user.id}, function(err,project) {
 api 99
-
+Project.create({title:"fake title",completed:false,user:user.id}, function(err,project) {
 
 links
 job sched
@@ -36,3 +36,17 @@ messages
 
 
 email notifications
+
+
+
+<div>Agent Info</div>
+<input type="text" placeholder="Agent name" ref="first"/>
+<input type="text" placeholder="Phone" ref="first"/>
+<input type="text" placeholder="Address" ref="first"/>
+<input type="text" placeholder="Email" ref="first"/>
+<div>Adjuster Info</div>
+<input type="text" placeholder="Adjuster name" ref="first"/>
+<input type="text" placeholder="Phone" ref="first"/>
+<input type="text" placeholder="Address" ref="first"/>
+<input type="text" placeholder="Email" ref="first"/>
+<br />

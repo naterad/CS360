@@ -126,14 +126,6 @@ var ListPage = React.createClass({
       <div className="body_div">
       <h1>Project List</h1>
       <Link to="addproject">add project</Link>
-
-
-      // name
-      // project number
-      // Address
-      // carrier allstate, state farm,
-      // job type smoke, fire, suicide, mold
-
       <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
       <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
       <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
@@ -250,7 +242,6 @@ var AddProject = React.createClass({
 
       <div className="newproject">
       <form className="form">
-      <div>Project Info</div>
       <input type="text" placeholder="Home owner name" ref="owner_name"/>
       <input type="text" placeholder="Project number" ref="project_name"/>
       <input type="text" placeholder="Address" ref="address"/>
@@ -259,16 +250,7 @@ var AddProject = React.createClass({
       <input type="text" placeholder="start date" ref="start_date"/>
       <input type="text" placeholder="estimated end date" ref="end_date"/>
       <input type="text" placeholder="claim number" ref="claim"/>
-      <div>Agent Info</div>
-      <input type="text" placeholder="Agent name" ref="first"/>
-      <input type="text" placeholder="Phone" ref="first"/>
-      <input type="text" placeholder="Address" ref="first"/>
-      <input type="text" placeholder="Email" ref="first"/>
-      <div>Adjuster Info</div>
-      <input type="text" placeholder="Adjuster name" ref="first"/>
-      <input type="text" placeholder="Phone" ref="first"/>
-      <input type="text" placeholder="Address" ref="first"/>
-      <input type="text" placeholder="Email" ref="first"/>
+      <br />
       <br />
       <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
       {this.state.error ? (
@@ -387,10 +369,9 @@ var project = {
         //localStorage.email = res.email;
         //localStorage.email = res.email;
 
-
         if (cb)
-        cb(true);
-        this.onChange(true);
+          cb(true);
+          this.onChange(true);
       }.bind(this),
       error: function(xhr, status, err) {
         console.log("error with adding a new project");
@@ -513,4 +494,4 @@ var routes = (
   </Router>
 );
 
-ReactDOM.render(routes, document.body);
+ReactDOM.render(routes, document.getElementById('content'));
