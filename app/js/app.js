@@ -234,28 +234,29 @@ var AddProject = React.createClass({
     event.preventDefault();
     // get data from form
     var owner_name = this.refs.owner_name.value;
-    var project_name = this.refs.project_name.value;
+    var project_num = this.refs.project_num.value;
     var address = this.refs.address.value;
     var carrier = this.refs.carrier.value;
     var start_date = this.refs.start_date.value;
     var end_date = this.refs.end_date.value;
     var claim = this.refs.claim.value;
-    if (!owner_name || !project_name || !address ||!carrier ||!start_date || !end_date|| !claim ) {
-      return;
-    }
+    var user2 = this.refs.user2.value;
+    var user3 = this.refs.user3.value;
+    if (owner_name && project_num && address && carrier && job_type && start_date && end_date && claim ) {
 
-    // register via the API
-    //project.addNew(owner_name,project_name, address, carrier, start_date, end_date, claim, function(loggedIn) {
-    project.addNew(owner_name, function(loggedIn) {
-      // register callback
-      if (!loggedIn)
-      return this.setState({
-        error: true
-      });
-      console.log('project added');
-      //this.context.router.transitionTo('/list');
-      this.history.pushState(null, '/projectpage');
-    }.bind(this));
+      // register via the API
+      //project.addNew(owner_name,project_name, address, carrier, start_date, end_date, claim, function(loggedIn) {
+      project.addNew(owner_name, project_num, address, carrier, job_type, start_date, end_date, claim, user2, user3, function(loggedIn) {
+        // register callback
+        if (!loggedIn)
+        return this.setState({
+          error: true
+        });
+        console.log('project added');
+        //this.context.router.transitionTo('/list');
+        this.history.pushState(null, '/projectpage');
+      }.bind(this));
+    }
   },
 
   render: function() {
@@ -269,13 +270,17 @@ var AddProject = React.createClass({
       <div className="newproject">
       <form className="form">
       <input type="text" placeholder="Home owner name" ref="owner_name"/>
-      <input type="text" placeholder="Project number" ref="project_name"/>
+      <input type="text" placeholder="Project number" ref="project_num"/>
       <input type="text" placeholder="Address" ref="address"/>
       <input type="text" placeholder="Carrier" ref="carrier"/>
       <input type="text" placeholder="Job type" ref="job_type"/>
-      <input type="text" placeholder="start date" ref="start_date"/>
-      <input type="text" placeholder="estimated end date" ref="end_date"/>
-      <input type="text" placeholder="claim number" ref="claim"/>
+      <input type="text" placeholder="Start date" ref="start_date"/>
+      <input type="text" placeholder="Estimated end date" ref="end_date"/>
+      <input type="text" placeholder="Claim number" ref="claim"/>
+      <br />
+      <div>Additional Users</div>
+      <input type="text" placeholder="Email" ref="user2"/>
+      <input type="text" placeholder="Email" ref="user3"/>
       <br />
       <br />
       <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
@@ -369,7 +374,7 @@ var Header = React.createClass({
   }
 });
 var project = {
-  addNew: function(project_name, cb) {
+  addNew: function(owner_name, proj_num, address, carrier, job_type, start_date, end_date, claim, user2, user3, cb) {
     console.log("in the addNew");
     //console.log(cb);
     // submit request to server, call the callback when complete
@@ -379,14 +384,16 @@ var project = {
       dataType: 'json',
       type: 'POST',
       headers: {'Authorization': localStorage.token},
-      data: {
-        // owner_name: owner_name,
-        title: project_name
-        // address: address,
-        // carrier: carrier,
-        // start_date: start_date,
-        // end_date: end_date,
-        // claim: claim
+      data: {owner_name: owner_name,
+        proj_num: proj_num,
+        address: address,
+        carrier: carrier,
+        job_type: job_type,
+        start_date: start_date,
+        end_date: end_date,
+        claim: claim,
+        user2: user2,
+        user3: user3
       },
       // on success, store a login token
       success: function(res) {
@@ -396,8 +403,8 @@ var project = {
         //localStorage.email = res.email;
 
         if (cb)
-          cb(true);
-          this.onChange(true);
+        cb(true);
+        this.onChange(true);
       }.bind(this),
       error: function(xhr, status, err) {
         console.log("error with adding a new project");
