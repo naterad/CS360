@@ -32,7 +32,7 @@ app.post('/api/users/register', function (req, res) {
         // create a token
         var token = User.generateToken(user.email);
         // return value is JSON containing the user's name and token
-        res.json({first: user.first, last:user.last, token: token});
+        res.json({first: user.first, last:user.last,token: token});
       });
     } else {
       // return an error if the email is taken
