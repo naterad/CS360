@@ -90,7 +90,7 @@ var Login = React.createClass({
       return this.setState({
         error: true
       });
-      console.log('registered');
+      console.log('logged in');
       this.history.pushState(null, '/listpage');
     }.bind(this));
   },
@@ -431,9 +431,9 @@ var auth = {
       // on success, store a login token
       success: function(res) {
         localStorage.token = res.token;
-        console.log(res.email);
+        console.log(email);
         console.log(res.token);
-        localStorage.email = res.email;
+        localStorage.email = email;
         if (cb)
         cb(true);
         this.onChange(true);
@@ -449,6 +449,7 @@ var auth = {
   },
   // login the user
   login: function(email, password, cb) {
+    delete localStorage.token;
     // submit login request to server, call callback when complete
     cb = arguments[arguments.length - 1];
     // check if token in local storage
@@ -458,7 +459,6 @@ var auth = {
       this.onChange(true);
       return;
     }
-
     // submit request to server
     var url = "/api/users/login";
     $.ajax({
@@ -472,12 +472,13 @@ var auth = {
       success: function(res) {
         // on success, store a login token
         localStorage.token = res.token;
-        localStorage.email = res.email;
+        localStorage.email = email;
         if (cb)
         cb(true);
         this.onChange(true);
       }.bind(this),
       error: function(xhr, status, err) {
+        console.log('error!');
         // if there is an error, remove any login token
         delete localStorage.token;
         if (cb)
