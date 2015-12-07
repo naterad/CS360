@@ -1,6 +1,7 @@
 var app = require('./express.js');
 var User = require('./user.js');
 var Project = require('./project.js');
+var Comment = require('./comments.js');
 
 // setup body parser
 var bodyParser = require('body-parser');
@@ -125,6 +126,49 @@ app.get('/api/projects/:project_id', function (req,res) {
           return;
         }
         // return value is the project as JSON
+        res.json({project:project});
+      });
+    } else {
+      res.sendStatus(403);
+    }
+  });
+});
+
+//get comments for project
+app.get('/api/comments/:project_id', function (req,res) {
+  // validate the supplied token
+  user = User.verifyToken(req.headers.authorization, function(user) {
+    if (user) {
+      // if the token is valid, find all the project's comments and return them
+      Comment.find({proj_id:req.params.project_id}, function(err, comments) {
+        if (err) {
+          res.sendStatus(403);
+          return;
+        }
+        // return value is the list of comments as JSON
+        res.json({comments: comments});
+      });
+    } else {
+      res.sendStatus(403);
+    }
+  });
+});
+
+//add a comment to project
+app.post('/api/comments', function (req,res) {
+  // validate the supplied token
+  // get indexes
+  console.log("inside the add function");
+  user = User.verifyToken(req.headers.authorization, function(user) {
+    if (user) {
+      console.log("inside the comment if statement");
+
+      Comment.create({proj_id:,author:user.last+','+user.first,date:req.body.date,comment:req.body.comment}, function(err,project) {
+
+        if (err) {
+          res.sendStatus(403);
+          return;
+        }
         res.json({project:project});
       });
     } else {
