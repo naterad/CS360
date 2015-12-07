@@ -9,13 +9,16 @@ var User = require('./user.js');
 // Project schema
 var projectSchema = new Schema({
     user: {type: ObjectId, ref: 'users'},
-    proj_number: String,
+    owner_name: String,
+    proj_num: String,
     address: String,
     carrier: String,
     job_type: String,
-    claim: String,
-    start: {type: Date, default: Date.now},
-    end: {type: Date, default: Date.now}
+    start_date: String,
+    end_date: String,
+    claim: String
+    // start: {type: Date, default: Date.now},
+    // end: {type: Date, default: Date.now}
 });
 
 projectSchema.methods.setTitle=function(title){
