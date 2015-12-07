@@ -120,11 +120,37 @@ var Login = React.createClass({
 
 var ListPage = React.createClass({
   render: function() {
+    var url = "/api/projects";
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'POST',
+      data: {
+      },
+      // on success, store a login token
+      success: function(res) {
+        console.log("it worked");
+        if (cb)
+        cb(true);
+        this.onChange(true);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // if there is an error, remove any login token
+        console.log("didn't worked");
+        // delete localStorage.token;
+        // if (cb)
+        // cb(false);
+        // this.onChange(false);
+      }.bind(this)
+    });
+
     return (
       <div>
       <Header/>
       <div className="body_div">
       <h1>Project List</h1>
+      <h2>{localStorage.email}</h2>
+      <h2>{localStorage.token}</h2>
       <Link to="addproject">add project</Link>
       <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
       <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
@@ -405,6 +431,8 @@ var auth = {
       // on success, store a login token
       success: function(res) {
         localStorage.token = res.token;
+        console.log(res.email);
+        console.log(res.token);
         localStorage.email = res.email;
         if (cb)
         cb(true);
