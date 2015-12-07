@@ -68,7 +68,7 @@ app.get('/api/projects', function (req,res) {
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
       // if the token is valid, find all the user's projects and return them
-      Project.find({user:user.id}, function(err, projects) {
+      Project.find({$or:[{user:user.id},{user2:user.email},{user3:user.email}]}, function(err, projects) {
         if (err) {
           res.sendStatus(403);
           return;
