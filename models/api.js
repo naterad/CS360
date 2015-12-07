@@ -90,7 +90,7 @@ app.post('/api/projects', function (req,res) {
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
       // if the token is valid, create the project for the user
-      Project.create({user:user.id, owner_name: req.body.owner_name, proj_num:req.body.proj_num, address:req.body.address, carrier:req.body.carrier, job_type:req.body.job_type, start_date:req.body.start_date, end_date:req.body.end_date, claim:req.body.claim }, function(err,project) {
+      Project.create({user:user.id, owner_name: req.body.owner_name, proj_num:req.body.proj_num, address:req.body.address, carrier:req.body.carrier, job_type:req.body.job_type, start_date:req.body.start_date, end_date:req.body.end_date, claim:req.body.claim, user2:req.body.user2, user3:req.body.user3 }, function(err,project) {
 
         if (err) {
           res.sendStatus(403);
@@ -158,7 +158,7 @@ app.post('/api/comments', function (req,res) {
     if (user) {
       console.log("inside the comment if statement");
 
-      Comment.create({proj_id:,author:user.last+','+user.first,date:req.body.date,comment:req.body.comment}, function(err,project) {
+      Comment.create({proj_id:req.params.project_id,author:user.last+','+user.first,date:req.body.date,comment:req.body.comment}, function(err,project) {
 
         if (err) {
           res.sendStatus(403);

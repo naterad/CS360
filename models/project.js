@@ -16,7 +16,9 @@ var projectSchema = new Schema({
     job_type: String,
     start_date: String,
     end_date: String,
-    claim: String
+    claim: String,
+    user2: String,
+    user3: String,
     // start: {type: Date, default: Date.now},
     // end: {type: Date, default: Date.now}
 });

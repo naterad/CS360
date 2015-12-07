@@ -240,10 +240,12 @@ var AddProject = React.createClass({
     var start_date = this.refs.start_date.value;
     var end_date = this.refs.end_date.value;
     var claim = this.refs.claim.value;
+    var user2 = this.refs.user2.value;
+    var user3 = this.refs.user3.value;
     if (owner_name && project_num && address && carrier && job_type && start_date && end_date && claim ) {
     // register via the API
 
-      project.addNew(owner_name, project_num, address, carrier, job_type, start_date, end_date, claim, function(loggedIn) {
+      project.addNew(owner_name, project_num, address, carrier, job_type, start_date, end_date, claim, user2, user3, function(loggedIn) {
         // register callback
         if (!loggedIn)
         return this.setState({
@@ -266,14 +268,19 @@ var AddProject = React.createClass({
 
       <div className="newproject">
       <form className="form">
+      <div>Project Info</div>
       <input type="text" placeholder="Home owner name" ref="owner_name"/>
       <input type="text" placeholder="Project number" ref="project_num"/>
       <input type="text" placeholder="Address" ref="address"/>
       <input type="text" placeholder="Carrier" ref="carrier"/>
       <input type="text" placeholder="Job type" ref="job_type"/>
-      <input type="text" placeholder="start date" ref="start_date"/>
-      <input type="text" placeholder="estimated end date" ref="end_date"/>
-      <input type="text" placeholder="claim number" ref="claim"/>
+      <input type="text" placeholder="Start date" ref="start_date"/>
+      <input type="text" placeholder="Estimated end date" ref="end_date"/>
+      <input type="text" placeholder="Claim number" ref="claim"/>
+      <br />
+      <div>Additional Users</div>
+      <input type="text" placeholder="Email" ref="user2"/>
+      <input type="text" placeholder="Email" ref="user3"/>
       <br />
       <br />
       <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
@@ -367,7 +374,7 @@ var Header = React.createClass({
   }
 });
 var project = {
-  addNew: function(owner_name, proj_num, address, carrier, job_type, start_date, end_date, claim, cb) {
+  addNew: function(owner_name, proj_num, address, carrier, job_type, start_date, end_date, claim, user2, user3, cb) {
     console.log("in the addNew");
     //console.log(cb);
     // submit request to server, call the callback when complete
@@ -385,7 +392,9 @@ var project = {
         job_type: job_type,
         start_date: start_date,
         end_date: end_date,
-        claim: claim
+        claim: claim,
+        user2: user2,
+        user3: user3
       },
       // on success, store a login token
       success: function(res) {
