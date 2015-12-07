@@ -167,19 +167,61 @@ var ListPage = React.createClass({
 });
 
 var ProjectPage = React.createClass({
+  addComment: function(event) {
+    // prevent default browser submit
+    event.preventDefault();
+    // get data from form
+    var comment = this.refs.comment.value;
+    if (!title) {
+      return;
+    }
+    // call API to add comment, and reload once added
+    apiCall.addComment(title, 'proj_id_goes_here', this.props.reload);
+    this.refs.comment.value = '';
+  },
   render: function() {
+    var url = "/api/projects/:project_id_goes_here";
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'GET',
+      headers: {'Authorization': localStorage.token},
+      data: {
+      },
+      // on success, store a login token
+      success: function(res) {
+        console.log("it worked");
+        console.log(JSON.stringify(res));
+        localStorage.title=res.title,
+        //if (cb)
+        //cb(true);
+        this.onChange(true);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // if there is an error, remove any login token
+        console.log("didn't worked");
+        // delete localStorage.token;
+        // if (cb)
+        // cb(false);
+        // this.onChange(false);
+      }.bind(this)
+    });
     return (
       <div>
 
       <Header/>
       <div className="body_div">
-      <h1>Project Page</h1>
+      <h1>{localStorage.title}</h1>
       <div className="proj_body">
       <p>Name: Bob Dylan</p>
       <p>Address: 509 E. 2800 N. Cedar Hills, UT</p>
       <p>Start Date: Oct 15, 2015</p>
       <p>End Date: Dec 10, 2015</p>
       </div>
+      List comments here
+      <form id="item-form" name="itemForm" onSubmit={this.addComment}>
+          <input type="text" id="new-comment" ref="comment" placeholder="Comment" autoFocus={true} />
+        </form>
       <Comment/>
       <Comment/>
       <Comment/>
@@ -237,6 +279,7 @@ var AddProject = React.createClass({
     var project_num = this.refs.project_num.value;
     var address = this.refs.address.value;
     var carrier = this.refs.carrier.value;
+    var job_type = this.refs.job_type.value;
     var start_date = this.refs.start_date.value;
     var end_date = this.refs.end_date.value;
     var claim = this.refs.claim.value;
@@ -252,9 +295,8 @@ var AddProject = React.createClass({
         return this.setState({
           error: true
         });
-        console.log('project added');
         //this.context.router.transitionTo('/list');
-        this.history.pushState(null, '/projectpage');
+        this.history.pushState(null, '/projectpage/'+localStorage.proj_id);
       }.bind(this));
     }
   },
@@ -384,7 +426,8 @@ var project = {
       dataType: 'json',
       type: 'POST',
       headers: {'Authorization': localStorage.token},
-      data: {owner_name: owner_name,
+      data: {
+        owner_name: owner_name,
         proj_num: proj_num,
         address: address,
         carrier: carrier,
@@ -397,14 +440,15 @@ var project = {
       },
       // on success, store a login token
       success: function(res) {
-        console.log("success");
+        console.log("success"+res.project._id);
+        localStorage.proj_id=res.project._id;
         //localStorage.owner_name = res.owner_name;
         //localStorage.email = res.email;
         //localStorage.email = res.email;
 
         if (cb)
         cb(true);
-        this.onChange(true);
+        //this.onChange(true);
       }.bind(this),
       error: function(xhr, status, err) {
         console.log("error with adding a new project");
@@ -419,7 +463,37 @@ var project = {
   }
 
 };
+var apiCall = {
+  // add an item, call the callback when complete
+  addComment: function(comment, proj_id, cb) {
+    var url = "/api/comments";
+    var dt=Date();
+    $.ajax({
+      url: url,
+      contentType: 'application/json',
+      data: JSON.stringify({
+        item: {
+          'comment': comment,
+          'proj_id':proj_id,
+          'date': (dt.getMonth()+1)+'/'+dt.getDate()+'/'+dt.getFullYear()+' '+dt.getHours()+':'+dt.getMinutes()
+        }
+      }),
+      type: 'POST',
+      headers: {'Authorization': localStorage.token},
+      success: function(res) {
+        if (cb)
+          cb(true, res);
+      },
+      error: function(xhr, status, err) {
+        // if there is an error, remove the login token
+        delete localStorage.token;
+        if (cb)
+          cb(false, status);
+      }
+    });
 
+  }
+};
 // authentication object
 var auth = {
   register: function(first,last, email, password, cb) {
