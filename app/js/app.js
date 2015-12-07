@@ -124,17 +124,12 @@ var ListPage = React.createClass({
     $.ajax({
       url: url,
       dataType: 'json',
-      type: 'POST',
-      headers: {'Authorization': localStorage.token},
+      type: 'GET',
       data: {
       },
       // on success, store a login token
       success: function(res) {
         console.log("it worked");
-        // console.log(res);
-        // console.log(res.address);
-        // console.log(res.carrier);
-        // console.log(res.job_type);
         if (cb)
         cb(true);
         this.onChange(true);
@@ -142,10 +137,10 @@ var ListPage = React.createClass({
       error: function(xhr, status, err) {
         // if there is an error, remove any login token
         console.log("didn't worked");
-        delete localStorage.token;
-        if (cb)
-        cb(false);
-        this.onChange(false);
+        // delete localStorage.token;
+        // if (cb)
+        // cb(false);
+        // this.onChange(false);
       }.bind(this)
     });
 
@@ -154,6 +149,8 @@ var ListPage = React.createClass({
       <Header/>
       <div className="body_div">
       <h1>Project List</h1>
+      <h2>{localStorage.first}</h2>
+      <h2>{localStorage.last}</h2>
       <Link to="addproject">add project</Link>
       <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
       <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
@@ -237,26 +234,28 @@ var AddProject = React.createClass({
     event.preventDefault();
     // get data from form
     var owner_name = this.refs.owner_name.value;
-    var project_num = this.refs.project_num.value;
+    var project_name = this.refs.project_name.value;
     var address = this.refs.address.value;
     var carrier = this.refs.carrier.value;
-    var job_type = this.refs.job_type.value;
     var start_date = this.refs.start_date.value;
     var end_date = this.refs.end_date.value;
     var claim = this.refs.claim.value;
-    if (owner_name && project_num && address && carrier && job_type && start_date && end_date && claim ) {
-      // register via the API
-      project.addNew(owner_name, project_num, address, carrier, job_type, start_date, end_date, claim, function(loggedIn) {
-        // register callback
-        if (!loggedIn)
-        return this.setState({
-          error: true
-        });
-        console.log('project added');
-        //this.context.router.transitionTo('/list');
-        this.history.pushState(null, '/projectpage');
-      }.bind(this));
+    if (!owner_name || !project_name || !address ||!carrier ||!start_date || !end_date|| !claim ) {
+      return;
     }
+
+    // register via the API
+    //project.addNew(owner_name,project_name, address, carrier, start_date, end_date, claim, function(loggedIn) {
+    project.addNew(owner_name, function(loggedIn) {
+      // register callback
+      if (!loggedIn)
+      return this.setState({
+        error: true
+      });
+      console.log('project added');
+      //this.context.router.transitionTo('/list');
+      this.history.pushState(null, '/projectpage');
+    }.bind(this));
   },
 
   render: function() {
@@ -270,7 +269,7 @@ var AddProject = React.createClass({
       <div className="newproject">
       <form className="form">
       <input type="text" placeholder="Home owner name" ref="owner_name"/>
-      <input type="text" placeholder="Project number" ref="project_num"/>
+      <input type="text" placeholder="Project number" ref="project_name"/>
       <input type="text" placeholder="Address" ref="address"/>
       <input type="text" placeholder="Carrier" ref="carrier"/>
       <input type="text" placeholder="Job type" ref="job_type"/>
@@ -370,7 +369,7 @@ var Header = React.createClass({
   }
 });
 var project = {
-  addNew: function(owner_name, proj_num, address, carrier, job_type, start_date, end_date, claim, cb) {
+  addNew: function(project_name, cb) {
     console.log("in the addNew");
     //console.log(cb);
     // submit request to server, call the callback when complete
@@ -381,14 +380,13 @@ var project = {
       type: 'POST',
       headers: {'Authorization': localStorage.token},
       data: {
-        owner_name: owner_name,
-        proj_num: proj_num,
-        address: address,
-        carrier: carrier,
-        job_type: job_type,
-        start_date: start_date,
-        end_date: end_date,
-        claim: claim
+        // owner_name: owner_name,
+        title: project_name
+        // address: address,
+        // carrier: carrier,
+        // start_date: start_date,
+        // end_date: end_date,
+        // claim: claim
       },
       // on success, store a login token
       success: function(res) {
@@ -435,6 +433,8 @@ var auth = {
         localStorage.token = res.token;
         console.log(email);
         console.log(res.token);
+        localStorage.first=res.first;
+        localStorage.last=res.last;
         localStorage.email = email;
         if (cb)
         cb(true);
@@ -454,13 +454,6 @@ var auth = {
     delete localStorage.token;
     // submit login request to server, call callback when complete
     cb = arguments[arguments.length - 1];
-    // check if token in local storage
-    if (localStorage.token) {
-      if (cb)
-      cb(true);
-      this.onChange(true);
-      return;
-    }
     // submit request to server
     var url = "/api/users/login";
     $.ajax({
@@ -472,9 +465,12 @@ var auth = {
         password: password
       },
       success: function(res) {
+        console.log('res>>'+JSON.stringify(res));
         // on success, store a login token
         localStorage.token = res.token;
         localStorage.email = email;
+        localStorage.first=res.first;
+        localStorage.last=res.last;
         if (cb)
         cb(true);
         this.onChange(true);

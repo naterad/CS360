@@ -32,7 +32,7 @@ app.post('/api/users/register', function (req, res) {
         // create a token
         var token = User.generateToken(user.email);
         // return value is JSON containing the user's name and token
-        res.json({first: user.first, last:user.last,token: token});
+        res.json({first: user.first_name, last:user.last_name,token: token});
       });
     } else {
       // return an error if the email is taken
@@ -54,7 +54,7 @@ app.post('/api/users/login', function (req, res) {
       // create a token
       var token = User.generateToken(user.email);
       // return value is JSON containing user's name and token
-      res.json({first: user.first,last:user.last, token: token});
+      res.json({first: user.first_name,last:user.last_name, token: token});
     } else {
       res.sendStatus(403);
     }
@@ -88,8 +88,13 @@ app.post('/api/projects', function (req,res) {
   console.log("inside the add function");
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
+      console.log("inside the user if statement");
+      //user.setTitle("req.body.first");
+      //user.setFirst(req.body.first);
+      //user.setLast(req.body.last);
+      //user.set_password(req.body.password);
       // if the token is valid, create the project for the user
-      Project.create({user:user.id, owner_name: req.body.owner_name, proj_num:req.body.proj_num, address:req.body.address, carrier:req.body.carrier, job_type:req.body.job_type, start_date:req.body.start_date, end_date:req.body.end_date, claim:req.body.claim }, function(err,project) {
+      Project.create({user:user.id,proj_number:"p num",address:"address",carrier:"farm",job_type:"fire",claim:"claim"}, function(err,project) {
 
         if (err) {
           res.sendStatus(403);
