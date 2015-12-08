@@ -60,7 +60,7 @@ var App = React.createClass({
 
       <div className="container">
       {this.props.children || <Login/>}
-      </div>
+</div>
       </div>
     );
   }
@@ -199,11 +199,11 @@ var ProjectPage = React.createClass({
     event.preventDefault();
     // get data from form
     var comment = this.refs.comment.value;
-    if (!title) {
+    if (!comment) {
       return;
     }
     // call API to add comment, and reload once added
-    apiCall.addComment(title, 'proj_id_goes_here', this.props.reload);
+    apiCall.addComment(comment, localStorage.proj_id, this.props.reload);
     this.refs.comment.value = '';
   },
   render: function() {
@@ -497,7 +497,11 @@ var apiCall = {
   // add an item, call the callback when complete
   addComment: function(comment, proj_id, cb) {
     var url = "/api/comments";
-    var dt=Date();
+    var dt=new Date();
+    var timestamp=(dt.getMonth()+1)+'/'+dt.getDate()+'/'+dt.getFullYear()+' '+dt.getHours()+':';
+    if(dt.getMinutes()<10)
+      timestamp+='0';
+    timestamp+=dt.getMinutes()
     $.ajax({
       url: url,
       contentType: 'application/json',
@@ -505,7 +509,7 @@ var apiCall = {
         item: {
           'comment': comment,
           'proj_id':proj_id,
-          'date': (dt.getMonth()+1)+'/'+dt.getDate()+'/'+dt.getFullYear()+' '+dt.getHours()+':'+dt.getMinutes()
+          'date': timestamp
         }
       }),
       type: 'POST',

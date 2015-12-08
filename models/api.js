@@ -159,8 +159,9 @@ app.post('/api/comments', function (req,res) {
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
       console.log("inside the comment if statement");
+      console.log(JSON.stringify(req.body));
 
-      Comment.create({proj_id:req.params.project_id,author:user.last+','+user.first,date:req.body.date,comment:req.body.comment}, function(err,project) {
+      Comment.create({proj_id:req.body.item.project_id,author:user.last_name+','+user.first_name,date:req.body.item.date,comment:req.body.item.comment}, function(err,project) {
 
         if (err) {
           res.sendStatus(403);
