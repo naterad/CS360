@@ -60,7 +60,7 @@ var App = React.createClass({
 
       <div className="container">
       {this.props.children || <Login/>}
-</div>
+      </div>
       </div>
     );
   }
@@ -121,7 +121,7 @@ var Login = React.createClass({
 var ListPage = React.createClass({
   mixins: [ History ],
   getInitialState: function() {
-      return {projects: []};
+    return {projects: []};
   },
   componentWillMount:function(){
     console.log('first?');
@@ -164,23 +164,21 @@ var ListPage = React.createClass({
     var results=this.state.projects;
 
     var list=results.map(function(result) {
-        //var boundClick = this.handleClick.bind(this,{result._id});
-        return (
-          <div id={result._id} onClick={this.handleClick.bind(this, result._id)} /*onClick={boundClick}*/ className="list_item"><table className="table"><tr><td>{result.owner_name}</td><td>{result.proj_num}</td><td>{result.address}</td><td>{result.job_type}</td><td>{result.carrier}</td></tr></table></div>
-        );
-      }, this);
+      //var boundClick = this.handleClick.bind(this,{result._id});
+      return (
+        <div key={result._id} id={result._id} onClick={this.handleClick.bind(this, result._id)} /*onClick={boundClick}*/ className="list_item"><table className="table"><tbody><tr><td>{result.owner_name}</td><td>{result.proj_num}</td><td>{result.address}</td><td>{result.job_type}</td><td>{result.carrier}</td></tr></tbody></table></div>
+      );
+    }, this);
     //console.log('before:'+JSON.stringify(results[0]));
     return (
       <div>
       <Header/>
       <div className="body_div">
       <div className="align_add">
-        <h1>Project List</h1>
-        <div className="add"><Link to="addproject">add project</Link></div>
+      <h1>Project List</h1>
+      <div className="add"><Link to="addproject">add project</Link></div>
       </div>
       {list}
-
-
 
       </div>
       </div>
@@ -198,10 +196,15 @@ var ProjectPage = React.createClass({
       return;
     }
     // call API to add comment, and reload once added
-    apiCall.addComment(comment, localStorage.proj_id, this.props.reload);
+    apiCall.addComment(comment, this.props.reload);
     this.refs.comment.value = '';
+    this.refs['comment_section'].componentWillMount();
   },
-  render: function() {
+  getInitialState: function() {
+    return {projects: []};
+  },
+  componentWillMount:function(){
+    console.log('first?');
     var url = "/api/projects/"+localStorage.proj_id;
     $.ajax({
       url: url,
@@ -239,6 +242,9 @@ var ProjectPage = React.createClass({
         // this.onChange(false);
       }.bind(this)
     });
+  },
+  render: function() {
+
     return (
       <div>
 
@@ -247,32 +253,32 @@ var ProjectPage = React.createClass({
       <h1>{localStorage.proj_num}</h1>
       <div className="proj_body">
       <div className="left_right_container">
-        <div className="proj_body_left">
-          <p>Name: {localStorage.owner_name}</p>
-          <p>Address: {localStorage.address}</p>
-          <p>Start Date: {localStorage.start_date}</p>
-          <p>Est. End Date: {localStorage.end_date}</p>
-          <p>Project #: {localStorage.proj_num}</p>
-        </div>
-        <div className="proj_body_right">
-          <p>Claim #: {localStorage.claim}</p>
-          <p>Job Type: {localStorage.job_type}</p>
-          <p>Carrier: {localStorage.carrier}</p>
-          <p>User 1: {localStorage.user1}</p>
-          <p>User 2: {localStorage.user2}</p>
-        </div>
+      <div className="proj_body_left">
+      <p>Name: {localStorage.owner_name}</p>
+      <p>Address: {localStorage.address}</p>
+      <p>Start Date: {localStorage.start_date}</p>
+      <p>Est. End Date: {localStorage.end_date}</p>
+      <p>Project #: {localStorage.proj_num}</p>
+      </div>
+      <div className="proj_body_right">
+      <p>Claim #: {localStorage.claim}</p>
+      <p>Job Type: {localStorage.job_type}</p>
+      <p>Carrier: {localStorage.carrier}</p>
+      <p>User 1: {localStorage.user1}</p>
+      <p>User 2: {localStorage.user2}</p>
+      </div>
       </div>
       </div>
       <br />
       <p>Comments</p>
+
+      <Comment ref='comment_section'/>
+
       <div className="add_comment_container">
       <form id="item-form" name="itemForm" onSubmit={this.addComment}>
-          <input  className="comment_text" type="text" id="new-comment" ref="comment" placeholder="Add comment" autoFocus={true}/>
-        </form>
+      <input  className="comment_text" type="text" id="new-comment" ref="comment" placeholder="Add comment" autoFocus={true}/>
+      </form>
       </div>
-      <Comment/>
-      <Comment/>
-      <Comment/>
 
       </div>
       </div>
@@ -281,11 +287,52 @@ var ProjectPage = React.createClass({
 });
 
 var Comment = React.createClass({
+  getInitialState: function() {
+    return {comments: []};
+  },
+  componentWillMount:function(){
+    console.log('first?');
+    var url = "/api/comments/"+localStorage.proj_id;
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      type: 'GET',
+      headers: {'Authorization': localStorage.token},
+      data: {
+      },
+      // on success, store a login token
+      success: function(res) {
+        console.log("it worked");
+        console.log(JSON.stringify(res));
+        localStorage.comments=res.comments;
+        this.setState({comments: res.comments});
+
+        //if (cb)
+        //cb(true);
+        //this.onChange(true);
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // if there is an error, remove any login token
+        console.log("didn't worked");
+        // delete localStorage.token;
+        // if (cb)
+        // cb(false);
+        // this.onChange(false);
+      }.bind(this)
+    });
+  },
   render: function() {
+    var results=this.state.comments;
+
+    var list=results.map(function(result) {
+      //var boundClick = this.handleClick.bind(this,{result._id});
+      return (
+        <div key={result._id} className="comment"><p className="comment_details">{result.author}, {result.date}</p><p>{result.comment}</p></div>
+      );
+    }, this);
     return (
-      <div className="comment">
-      <p>Name , Date </p>
-      <p>comment here</p>
+      <div className="comment_section">
+      {list}
 
       </div>
     );
@@ -513,12 +560,12 @@ var project = {
 };
 var apiCall = {
   // add an item, call the callback when complete
-  addComment: function(comment, proj_id, cb) {
+  addComment: function(comment, cb) {
     var url = "/api/comments";
     var dt=new Date();
     var timestamp=(dt.getMonth()+1)+'/'+dt.getDate()+'/'+dt.getFullYear()+' '+dt.getHours()+':';
     if(dt.getMinutes()<10)
-      timestamp+='0';
+    timestamp+='0';
     timestamp+=dt.getMinutes()
     $.ajax({
       url: url,
@@ -526,7 +573,7 @@ var apiCall = {
       data: JSON.stringify({
         item: {
           'comment': comment,
-          'proj_id':proj_id,
+          'proj_id':localStorage.proj_id,
           'date': timestamp
         }
       }),
@@ -534,13 +581,13 @@ var apiCall = {
       headers: {'Authorization': localStorage.token},
       success: function(res) {
         if (cb)
-          cb(true, res);
+        cb(true, res);
       },
       error: function(xhr, status, err) {
         // if there is an error, remove the login token
         delete localStorage.token;
         if (cb)
-          cb(false, status);
+        cb(false, status);
       }
     });
 

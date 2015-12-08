@@ -17,6 +17,10 @@ h3{
   background-color: blue;
   display: none;
 }
+.comment_details{
+  font-style: italic;
+  color: gray;
+}
 .signup{
   text-align:center;
   margin-top:10%;
