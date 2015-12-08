@@ -119,7 +119,12 @@ var Login = React.createClass({
 });
 
 var ListPage = React.createClass({
-  render: function() {
+  mixins: [ History ],
+  getInitialState: function() {
+      return {projects: []};
+  },
+  componentWillMount:function(){
+    console.log('first?');
     var url = "/api/projects";
     $.ajax({
       url: url,
@@ -132,6 +137,8 @@ var ListPage = React.createClass({
       success: function(res) {
         console.log("it worked");
         console.log(JSON.stringify(res));
+        localStorage.projects=res.projects;
+        this.setState({projects: res.projects});
         //if (cb)
         //cb(true);
         //this.onChange(true);
@@ -145,13 +152,33 @@ var ListPage = React.createClass({
         // this.onChange(false);
       }.bind(this)
     });
+  },
+  handleClick:function(proj_id){
+    console.log("should go to "+proj_id);
+    localStorage.proj_id=proj_id;
+    this.history.pushState(null, '/projectpage/'+localStorage.proj_id);
+  },
+  render: function() {
+    console.log('after?');
+    //var results=localStorage.projects;
+    var results=this.state.projects;
 
+    var list=results.map(function(result) {
+        //var boundClick = this.handleClick.bind(this,{result._id});
+        return (
+          <div id={result._id} onClick={this.handleClick.bind(this, result._id)} /*onClick={boundClick}*/ className="list_item">{result.proj_num}, {result.owner_name}</div>
+        );
+      }, this);
+    //console.log('before:'+JSON.stringify(results[0]));
     return (
       <div>
       <Header/>
       <div className="body_div">
       <h1>Project List</h1>
       <Link to="addproject">add project</Link>
+
+      {list}
+
       <div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
       <div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
       <div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
