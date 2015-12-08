@@ -1,10 +1,9 @@
 [project list]
-carrier allstate, state farm,
-job type smoke, fire, suicide, mold
 name
 project number
 Address
-
+job type smoke, fire, suicide, mold
+carrier allstate, state farm,
 
 [project page]
 // THINGS TO HAVE IN A PROJECT
@@ -50,3 +49,11 @@ email notifications
 <input type="text" placeholder="Address" ref="first"/>
 <input type="text" placeholder="Email" ref="first"/>
 <br />
+
+
+<div className="list_item">Project 1   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  456 E. 3535 N. Orem, UT</div>
+<div className="list_item">Project 2   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  603 E. 225 S. Salt Lake City, UT</div>
+<div className="list_item">Project 3  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+<div className="list_item">Project 4  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+<div className="list_item">Project 5  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
+<div className="list_item">Project 6  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   800 E. 1115 N. Provo, UT</div>
