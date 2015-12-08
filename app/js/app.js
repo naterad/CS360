@@ -180,7 +180,7 @@ var ProjectPage = React.createClass({
     this.refs.comment.value = '';
   },
   render: function() {
-    var url = "/api/projects/:project_id_goes_here";
+    var url = "/api/projects/"+localStorage.proj_id;
     $.ajax({
       url: url,
       dataType: 'json',
@@ -192,10 +192,13 @@ var ProjectPage = React.createClass({
       success: function(res) {
         console.log("it worked");
         console.log(JSON.stringify(res));
-        localStorage.title=res.title,
+        localStorage.proj_num=res.project.proj_num,
+        localStorage.address=res.project.address,
+        localStorage.owner_name=res.project.owner_name
+        console.log(localStorage.owner_name);
         //if (cb)
         //cb(true);
-        this.onChange(true);
+        //this.onChange(true);
       }.bind(this),
       error: function(xhr, status, err) {
         // if there is an error, remove any login token
@@ -211,10 +214,10 @@ var ProjectPage = React.createClass({
 
       <Header/>
       <div className="body_div">
-      <h1>{localStorage.title}</h1>
+      <h1>{localStorage.proj_num}</h1>
       <div className="proj_body">
-      <p>Name: Bob Dylan</p>
-      <p>Address: 509 E. 2800 N. Cedar Hills, UT</p>
+      <p>Name: {localStorage.owner_name}</p>
+      <p>Address: {localStorage.address}</p>
       <p>Start Date: Oct 15, 2015</p>
       <p>End Date: Dec 10, 2015</p>
       </div>
@@ -596,7 +599,7 @@ var routes = (
   <Route name="login" path="/login" component={Login} />
   <Route name="addproject" path="/addproject" component={AddProject} />
   <Route name="signup" path="/signup" component={Signup} />
-  <Route name="projectpage" path="/projectpage" component={ProjectPage} />
+  <Route name="projectpage" path="/projectpage/:id" component={ProjectPage} />
   <Route name="profile" path="/profile" component={Profile} />
   </Route>
   </Router>

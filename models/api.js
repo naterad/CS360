@@ -109,6 +109,7 @@ app.get('/api/projects/:project_id', function (req,res) {
   // validate the supplied token
   user = User.verifyToken(req.headers.authorization, function(user) {
     if (user) {
+      console.log(req.params.project_id);
       // if the token is valid, then find the requested project
       Project.findById(req.params.project_id, function(err, project) {
         if (err) {
@@ -116,10 +117,11 @@ app.get('/api/projects/:project_id', function (req,res) {
           return;
         }
         // get the project if it belongs to the user, otherwise return an error
-        if (project.user != user) {
+        //commmented out since user2/user3 can open project
+        /*if (project.user != user) {
           res.sendStatus(403);
           return;
-        }
+        }*/
         // return value is the project as JSON
         res.json({project:project});
       });
