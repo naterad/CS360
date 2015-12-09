@@ -110,9 +110,7 @@ var Login = React.createClass({
       ) : null}
       </form>
       <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
-      <br/>
-      <br/>
-      <Link to="listpage">Project List</Link>
+    
       </div>
     );
   }
@@ -272,13 +270,15 @@ var ProjectPage = React.createClass({
       <br />
       <p>Comments</p>
 
-      <Comment ref='comment_section'/>
+
 
       <div className="add_comment_container">
       <form id="item-form" name="itemForm" onSubmit={this.addComment}>
       <input  className="comment_text" type="text" id="new-comment" ref="comment" placeholder="Add comment" autoFocus={true}/>
       </form>
       </div>
+
+      <Comment ref='comment_section'/>
 
       </div>
       </div>
@@ -426,8 +426,6 @@ var AddProject = React.createClass({
       ) : null }
       </form>
       </div>
-
-      <Link to="listpage">back to project list</Link>
       </div>
       </div>
     );
