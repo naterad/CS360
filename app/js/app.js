@@ -260,7 +260,6 @@ var ProjectPage = React.createClass({
       <br />
       <p>Comments</p>
 
-      <Comment ref='comment_section'/>
 
       <div className="add_comment_container">
       <form id="item-form" name="itemForm" onSubmit={this.addComment}>
@@ -268,6 +267,7 @@ var ProjectPage = React.createClass({
       </form>
       </div>
 
+      <Comment ref='comment_section'/>
 
       </div>
       </div>
@@ -312,7 +312,7 @@ var Comment = React.createClass({
   },
   render: function() {
     var results=this.state.comments;
-
+    results.reverse();
     var list=results.map(function(result) {
       //var boundClick = this.handleClick.bind(this,{result._id});
       return (
