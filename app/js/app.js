@@ -100,17 +100,19 @@ var Login = React.createClass({
     return (
       <div className="login">
 
-      <form className="form" onSubmit={this.login}>
+      <form className="form">
       <input type="text" placeholder="Email" ref="email" autoFocus={true} />
       <br/>
       <input type="password" placeholder="Password" ref="password"/>
       <br/>
       <br/>
-      <input className="btn" type="submit" value="Login" />
+      <input className="btn" type="submit"  onClick={this.login} value="Login" />
       {this.state.error ? (
         <div className="alert">Invalid email or password.</div>
       ) : null}
       </form>
+      
+
       <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
 
       </div>
