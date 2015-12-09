@@ -395,18 +395,18 @@ var AddProject = React.createClass({
 
       <div className="newproject">
       <form className="form">
-      <input type="text" placeholder="Home owner name" ref="owner_name"/>
-      <input type="text" placeholder="Project number" ref="project_num"/>
-      <input type="text" placeholder="Address" ref="address"/>
-      <input type="text" placeholder="Carrier" ref="carrier"/>
-      <input type="text" placeholder="Job type" ref="job_type"/>
-      <input type="text" placeholder="Start date" ref="start_date"/>
-      <input type="text" placeholder="Estimated end date" ref="end_date"/>
-      <input type="text" placeholder="Claim number" ref="claim"/>
+      <input type="text" title="Home owner name" placeholder="Home owner name" ref="owner_name"/>
+      <input type="text" title="Project number" placeholder="Project number" ref="project_num"/>
+      <input type="text" title="Address" placeholder="Address" ref="address"/>
+      <input type="text" title="Carrier" placeholder="Carrier" ref="carrier"/>
+      <input type="text" title="Job type" placeholder="Job type" ref="job_type"/>
+      <input type="text" title="Start date" placeholder="Start date" ref="start_date"/>
+      <input type="text" title="Estimated end date" placeholder="Estimated end date" ref="end_date"/>
+      <input type="text" title="Claim number" placeholder="Claim number" ref="claim"/>
       <br />
       <div>Additional Users</div>
-      <input type="text" placeholder="Email" ref="user2"/>
-      <input type="text" placeholder="Email" ref="user3"/>
+      <input type="text" title="Email" placeholder="Email" ref="user2"/>
+      <input type="text" title="Email" placeholder="Email" ref="user3"/>
       <br />
       <br />
       <input className="btn addsubmit" onClick={this.addnewproject} type="submit" value="Submit"/>
