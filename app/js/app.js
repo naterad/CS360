@@ -110,7 +110,7 @@ var Login = React.createClass({
       ) : null}
       </form>
       <Link to="signup"><input className="btn" type="button" value="Signup"/></Link>
-    
+
       </div>
     );
   }
@@ -199,7 +199,7 @@ var ProjectPage = React.createClass({
     this.refs['comment_section'].componentWillMount();
   },
   getInitialState: function() {
-    return {projects: []};
+    return {project: {}};
   },
   componentWillMount:function(){
     console.log('first?');
@@ -215,17 +215,7 @@ var ProjectPage = React.createClass({
       success: function(res) {
         console.log("it worked");
         console.log(JSON.stringify(res));
-        localStorage.proj_num=res.project.proj_num,
-        localStorage.address=res.project.address,
-        localStorage.owner_name=res.project.owner_name,
-        localStorage.start_date=res.project.start_date,
-        localStorage.end_date=res.project.end_date,
-
-        localStorage.claim=res.project.claim,
-        localStorage.job_type=res.project.job_type,
-        localStorage.carrier=res.project.carrier,
-        localStorage.user1=res.project.user1,
-        localStorage.user2=res.project.user2
+        this.setState({project:res.project});
         console.log(localStorage.owner_name);
         //if (cb)
         //cb(true);
@@ -248,29 +238,29 @@ var ProjectPage = React.createClass({
 
       <Header/>
       <div className="body_div">
-      <h1>{localStorage.proj_num}</h1>
+      <h1>{this.state.project.proj_num}</h1>
       <div className="proj_body">
       <div className="left_right_container">
       <div className="proj_body_left">
-      <p>Name: {localStorage.owner_name}</p>
-      <p>Address: {localStorage.address}</p>
-      <p>Start Date: {localStorage.start_date}</p>
-      <p>Est. End Date: {localStorage.end_date}</p>
-      <p>Project #: {localStorage.proj_num}</p>
+      <p>Name: {this.state.project.owner_name}</p>
+      <p>Address: {this.state.project.address}</p>
+      <p>Start Date: {this.state.project.start_date}</p>
+      <p>Est. End Date: {this.state.project.end_date}</p>
+      <p>Project #: {this.state.project.proj_num}</p>
       </div>
       <div className="proj_body_right">
-      <p>Claim #: {localStorage.claim}</p>
-      <p>Job Type: {localStorage.job_type}</p>
-      <p>Carrier: {localStorage.carrier}</p>
-      <p>User 1: {localStorage.user1}</p>
-      <p>User 2: {localStorage.user2}</p>
+      <p>Claim #: {this.state.project.claim}</p>
+      <p>Job Type: {this.state.project.job_type}</p>
+      <p>Carrier: {this.state.project.carrier}</p>
+      <p>User 1: {this.state.project.user2}</p>
+      <p>User 2: {this.state.project.user3}</p>
       </div>
       </div>
       </div>
       <br />
       <p>Comments</p>
 
-
+      <Comment ref='comment_section'/>
 
       <div className="add_comment_container">
       <form id="item-form" name="itemForm" onSubmit={this.addComment}>
@@ -278,7 +268,6 @@ var ProjectPage = React.createClass({
       </form>
       </div>
 
-      <Comment ref='comment_section'/>
 
       </div>
       </div>
