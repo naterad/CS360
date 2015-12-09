@@ -5,6 +5,7 @@ var IndexRoute = ReactRouter.Route;
 var History = ReactRouter.History;
 
 var App = React.createClass({
+    mixins: [ History ],
   // context so the componevnt can access the router
   contextTypes: {
     router: React.PropTypes.func
@@ -31,7 +32,8 @@ var App = React.createClass({
   // logout the user and redirect to home page
   logout: function(event) {
     auth.logout();
-    this.context.router.replaceWith('/');
+    //this.context.router.replaceWith('/');
+    this.history.pushState(null, '/');
   },
   render: function() {
     return (
